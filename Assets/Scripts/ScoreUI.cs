@@ -4,9 +4,10 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
-public class Score : MonoBehaviour
+public class ScoreUI : MonoBehaviour
 {
-    public static Score instance;
+
+
     [SerializeField] private TextMeshProUGUI _currentScoreText;
     [SerializeField] private TextMeshProUGUI _highScoreText;
 
@@ -14,21 +15,17 @@ public class Score : MonoBehaviour
 
     private void Awake()
     {
-        if (instance == null)
-        {
-            instance = this;
-        }
+    
          
-        if (PlayerPrefs.GetInt("CurrentScore", _score) != 0)
-        {
-            _score = PlayerPrefs.GetInt("CurrentScore", _score);
-        }
+      
     }
 
 
     void Start()
     {
-        _currentScoreText.text = PlayerPrefs.GetInt("CurrentScore",_score).ToString();
+
+        ScoreManager.GetInstance().OnScoreChanged += UpdateScore;
+        _currentScoreText.text = ScoreManager.GetInstance().GetScore().ToString();
 
         _highScoreText.text = PlayerPrefs.GetInt("HighScore", 0).ToString();
 
@@ -46,9 +43,9 @@ public class Score : MonoBehaviour
         }
     }
 
-    public void UpdateScore()
+    public void UpdateScore(int score)
     {
-        _score++;
+        _score = score;
 
         _currentScoreText.text = _score.ToString();
         UpdateHighScore();

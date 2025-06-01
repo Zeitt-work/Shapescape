@@ -32,7 +32,7 @@ public class GameManager : MonoBehaviour
         Time.timeScale = 0f;
         _audioSource.Stop();
         // _audioSource.PlayOneShot(death);
-        PlayerPrefs.SetInt("CurrentScore", 0);
+        
     }
 
     public void CrashAudio()
@@ -56,7 +56,7 @@ public class GameManager : MonoBehaviour
             nextSceneIndex = 1;
         }
         SceneManager.LoadScene(nextSceneIndex);
-        PlayerPrefs.SetInt("CurrentScore",Score.instance._score);
+        
         
     }
 
